@@ -1,0 +1,54 @@
+﻿@model _19T1021302.Web.Models.ShipperSearchOutput
+@{
+    Layout = null;
+}
+
+<p style="margin-top:10px;">
+    có <strong>@Model.RowCount</strong> nhà cung cấp trên tổng số <strong>@Model.PageCount</strong> trang
+</p>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr class="bg-primary">
+                <th>Tên người giao hàng</th>
+                <th>Số điện thoại</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Data)   //Khi action truyền dữ liệu qua view thông qua model : khai báo kiểu dữ liệu,trong view có thể sử dụng thuộc tính Model - thuộc tính chứa dữ liệu action đưa vào
+            {
+                <tr>
+                    <td>@item.ShipperName</td>
+                    <td>@item.Phone</td>
+                    <td>
+                        <a href="~/Shipper/Edit/?id=@item.ShipperID" class="btn btn-xs btn-primary">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="~/Shipper/Delete/@item.ShipperID" class="btn btn-xs btn-danger">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+<div class="text-center">
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            if (i == Model.Page)
+            {
+                <li class="active"><a href="#">@i</a></li>
+            }
+            else
+            {
+                <li><a href="javascript:;" onclick="doSearch(@i)">@i</a></li>
+            }
+        }
+
+    </ul>
+</div>
+
